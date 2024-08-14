@@ -135,7 +135,7 @@ for pkg_name in need_pkgs:
 
                 # import and add attr
                 module = path_import(source_file)
-                module.SDK_Class = SDK
+                module.SDK_Class = SDK  #Incoming current SDK object, module can call the loaded module when loading.
                 module_attr = getattr(module, source_name)
                 setattr(PackageClass, link_name, module_attr)
                 echo_log('info', f'    Add `{link_name}` To PackageClass')
