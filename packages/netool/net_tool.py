@@ -1,4 +1,5 @@
 import requests
+SDK_Class = type('SDK_Class', (), {})
 
 def SendGet(url:str, headers:dict):
     response = requests.get(url, headers=headers)

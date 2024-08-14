@@ -1,11 +1,8 @@
 import json
+SDK_Class = type('SDK_Class', (), {})
 
-i=1
-netool_post = None
-Token = str()
-
-def send(recvId: str, recvType: str, text: str, buttons: list = []):
-    netool_post
+def send(token:str, recvId: str, recvType: str, text: str, buttons: list = []):
+    global i
     data = {
         "recvId": recvId,
         "recvType": recvType,
@@ -15,9 +12,9 @@ def send(recvId: str, recvType: str, text: str, buttons: list = []):
             "buttons": [buttons]
         }
     }
-    rep = netool_post(
-        url=f'https://chat-go.jwzhd.com/open-apis/v1/bot/send?token={Token}', 
+    rep = SDK_Class.netool.SendPost(
+        url=f'https://chat-go.jwzhd.com/open-apis/v1/bot/send?token={token}', 
         headers={"Content-Type": "application/json; charset=utf-8", }, 
-        data=data
+        data=json.dumps(data)
     )
     return json.loads(rep.text)
