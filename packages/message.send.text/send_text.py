@@ -2,7 +2,6 @@ import json
 SDK_Class = type('SDK_Class', (), {})
 
 def send(token:str, recvId: str, recvType: str, text: str, buttons: list = []):
-    global i
     data = {
         "recvId": recvId,
         "recvType": recvType,
