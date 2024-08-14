@@ -101,6 +101,10 @@ for pkg_name in need_pkgs:
                     echo_log('error', f'  Package `{pkg_name}` require `{pkg_name_tmp}`')
                     echo_log('error', f'  But `{pkg_name_tmp}` not installed')
                     exit()
+                if need_pkgs.index(pkg_name_tmp) > need_pkgs.index(pkg_name):
+                    echo_log('error', f'  Package `{pkg_name_tmp}` exists, but cannot be called')
+                    echo_log('error', f'  Load after `{pkg_name}`')
+                    exit()
 
         # load install steps
         install_steps = steps['install']
