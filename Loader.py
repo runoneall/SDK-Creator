@@ -62,6 +62,9 @@ def path_import(file_path:str):
 # init module
 class SDK:
     pass
+
+# add import path
+add_import_path(creator_folder)
     
 # load sdk config
 sdk_config = load_config(sdk_file('sdk_config.yml'))

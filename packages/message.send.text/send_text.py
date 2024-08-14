@@ -1,8 +1,11 @@
+import json
+
+i=1
 netool_post = None
 Token = str()
 
 def send(recvId: str, recvType: str, text: str, buttons: list = []):
-    import json
+    netool_post
     data = {
         "recvId": recvId,
         "recvType": recvType,
