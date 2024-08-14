@@ -1,4 +1,4 @@
 Load:
   - func1
   - aaa
-  - func2
+  # - func2

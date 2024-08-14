@@ -1,6 +1,7 @@
 # import module
 import os
 import sys
+import importlib.util
 import yaml
 from termcolor import colored
 
@@ -19,12 +20,23 @@ def sdk_file(file_name:str) -> str:
 
 # echo color log tool
 def echo_log(level:str, msg:str):
+
+    # info color
     if level == 'info':
         print(colored('INF', 'black', 'on_cyan'), end=' : ')
         print(colored(msg, 'cyan'))
+
+    # success color
+    if level == 'success':
+        print(colored('SUC', 'black', 'on_green'), end=' : ')
+        print(colored(msg, 'green'))
+
+    # warning color
     if level == 'warning':
         print(colored('WAR', 'black', 'on_yellow'), end=' : ')
         print(colored(msg, 'yellow'))
+
+    # error color
     if level == 'error':
         print(colored('ERR', 'black', 'on_red'), end=' : ')
         print(colored(msg, 'red'))
@@ -34,9 +46,18 @@ def installed_pkgs() -> list:
     pkg_root_folder = f'{creator_folder}/packages'
     return os.listdir(pkg_root_folder)
 
+# add import path tool
 def add_import_path(folder_path:str):
     if folder_path not in sys.path:
         sys.path.append(folder_path)
+
+# import module from path
+def path_import(file_path:str):
+    file_name = file_path.split('/')[-1].split('.')[0]
+    spec = importlib.util.spec_from_file_location(file_name, file_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 # init module
 class SDK:
@@ -100,15 +121,37 @@ for pkg_name in need_pkgs:
 
             # add function
             if step_name == 'Add_Function':
+
+                # get add info
                 source = step[step_name][0]
                 source = source.split('/')
                 source_file = f'{pkg_folder}/{source[0]}'
                 source_name = source[1]
-                link_to = step[step_name][1]
-                print(source_name, source_file, link_to)
+                link_name = step[step_name][1]
+                echo_log('info', f'    Set `{source_name}` To `{link_name}`')
+
+                # import and add attr
+                module = path_import(source_file)
+                module_attr = getattr(module, source_name)
+                setattr(PackageClass, link_name, module_attr)
+                echo_log('info', f'    Add `{link_name}` To PackageClass')
+
+        # check package name
+        if Package_Name == str():
+            echo_log('error', f'  Package `{pkg_name}` not have `Package_Name`')
+            exit()
+
+        # add attr
+        setattr(SDK, Package_Name, PackageClass)
+        echo_log('info', '  Add `PackageClass` To SDK')
+        echo_log('success', '  Load Success')
 
     # if not, warning
     else:
         echo_log('warning', '  Got an error in `Load` from `sdk_config.yml`')
         echo_log('warning', f'   -{pkg_name}: Package Not Found')
         echo_log('warning', '  skip...')
+
+# log and exit
+echo_log('success', 'Loading Completed')
+echo_log('success', 'Project is Starting, Plase Wait\n')

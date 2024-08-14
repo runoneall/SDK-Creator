@@ -1,4 +1,7 @@
 step:
   require:
   install:
-    - Set_Package_Name: function1
+    # - Set_Package_Name: function2
+    - Add_Function:
+      - "fuckc.py/fuck"
+      - fuck
