@@ -1,4 +1,3 @@
 Load:
-  - func1
-  - aaa
-  # - func2
+  - netool
+  - message.send.text

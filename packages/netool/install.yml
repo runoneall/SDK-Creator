@@ -1,0 +1,14 @@
+step:
+  require:
+  install:
+    - Set_Package_Name: netool
+    - Add_Function:
+      - "net_tool.py/SendGet"
+      - SendGet
+    - Add_Function:
+      - "net_tool.py/SendPost"
+      - SendPost
+
+author: "runoneall"
+version: 1.0
+introduction: "Network Request Tool"

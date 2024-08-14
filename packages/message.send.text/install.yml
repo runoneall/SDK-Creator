@@ -1,0 +1,12 @@
+step:
+  require:
+    - netool
+  install:
+    - Set_Package_Name: NormalMessage
+    - Add_Function:
+      - "send_text.py/send"
+      - Send
+
+author: "runoneall"
+version: 1.0
+introduction: "Send Normal Message"
